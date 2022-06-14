@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+}
+.todoList{
+    width: 400px;
+    min-height: 600px;
+    background: #628ff8;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    box-sizing: border-box;
+}
+
+.task{
+    margin-top: 20px;
+    padding: 10px;
+    color: white;
+    width: 350px;
+    min-height: 80px;
+    background: darkcyan;
+    display: flex;
+    align-items: center;
+}
+
+.inputButton{
+    display: flex;
+}
+
+.title{
+    width: 330px;
+}
+
+.iconMenu{
+    cursor: pointer;
+    width: 35px;
+}
