@@ -1,14 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useTypesSelector} from "../../hooks/useTypedSelector";
-import {fetchTodolists, postTodolist} from "../../store/actions-creators/todolist";
+import {changeTaskStarred, fetchTodolists, postTodolist} from "../../store/actions-creators/todolist";
 import s from './todoList.module.css'
 import {TodolistActionTypes} from "../../types/todo";
 import {ReactComponent as MenuIcon} from "../../icon/icon.svg";
+import {ReactComponent as StarIcon} from "../../icon/star.svg";
 
 export const TodoList: React.FC = () => {
-    const {todolists, error, loading, newTaskTitle, limitError} = useTypesSelector(state => state.todoList)
+    const {todolists, error, loading, newTaskTitle, limitError, modifyingTitle} = useTypesSelector(state => state.todoList)
     const dispatch = useDispatch()
+    const tempStyle = s.taskDone + " " + s.title
+    const tempStyleDone = s.task + " " + s.taskDoneMain
+    const [input, setInput] = useState('') // дай знать пожалуйста, надо ли для инпута стейт в сторе или стейт через хук лучше)
+
+    //Когда появляется инпут, до этого диспачим значение в стор (el.title)(в месте где инпут) , делается рендер снова и тогда через useEffect мы setStatим наше значение setInput(el.title)
 
     useEffect(() => {
         dispatch(fetchTodolists())
@@ -28,11 +34,12 @@ export const TodoList: React.FC = () => {
         dispatch({type: TodolistActionTypes.CHANGE_LIMIT_ERROR, payload: {value:tempCount, error: error}})
     }
 
-    const openModal = (id: string) => {
+    const openMenu = (id: string) => {
+        dispatch({type: TodolistActionTypes.SET_SHOW_MENU, payload: {showing: true, id}})
         console.log('hi ' + id)
     }
 
-    const addTask = async (str:any)  => {
+    const addTask = async (str:string)  => {
         const obj = {
             title: str,
             starred: "false",
@@ -41,18 +48,16 @@ export const TodoList: React.FC = () => {
             date: new Date()
         }
         dispatch(postTodolist(obj))
-
-        // const res = await fetch('https://servertodolistdb.herokuapp.com/API/newtodo',{
-        //     method: 'POST',
-        //     headers: {"Content-Type": "application/json"},
-        //     body: JSON.stringify(obj)
-        // })
-        // const fullRes = await res.json()
-        // console.log(fullRes)
-
-        // Добавить в состояние пришеднший объект если всё успешно
+    }
 
 
+    const changeStarredToFalse = async (id: string) => {
+        dispatch(changeTaskStarred(todolists,id,false)) // удаляет из избранного, главный экран
+    }
+
+
+    const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.currentTarget.value)
     }
 
     return (
@@ -66,9 +71,20 @@ export const TodoList: React.FC = () => {
 
             {todolists?.map(el => {
                 return (
-                    <div key={el._id} className={s.task}>
-                        <div className={s.title}>{el.title}</div>
-                        <MenuIcon onClick={() => openModal(el._id)} className={s.iconMenu}/>
+                    <div key={el._id} className={el.done ? tempStyleDone : s.task}>
+
+                        {/*//changing*/}
+                        {modifyingTitle.editMode && modifyingTitle.id === el._id ?
+                                <input type="" value={input} onChange={e => inputChangeHandler(e)}/>
+                                // {() => setInput(el.title)}
+                              :
+                            // ошибка из-за setInput(el.title)
+                            <div className={el.done ? tempStyle : s.title}>{el.title}</div>}
+                        {/*//changing*/}
+
+
+                        {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
+                        <MenuIcon onClick={() => openMenu(el._id)} className={s.iconMenu}/>
                         {/*<div>{`${el.starred}`}</div>*/}
                     </div>
                 )

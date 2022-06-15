@@ -20,7 +20,8 @@
     color: white;
     width: 350px;
     min-height: 80px;
-    background: darkcyan;
+    background: #00caca;
+    border: 1px solid purple;
     display: flex;
     align-items: center;
 }
@@ -33,7 +34,19 @@
     width: 330px;
 }
 
+.taskDone{
+    text-decoration: line-through;
+    opacity: 0.4;
+}
+
+.taskDoneMain{
+    background: rgba(103, 114, 114, 0.7);
+}
 .iconMenu{
+    cursor: pointer;
+    width: 35px;
+}
+.starIcon{
     cursor: pointer;
     width: 35px;
 }

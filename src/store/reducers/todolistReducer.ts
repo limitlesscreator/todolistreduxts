@@ -3,10 +3,13 @@ import {TodolistAction, TodolistActionTypes, TodolistState} from "../../types/to
 
 const initState: TodolistState = {
     todolists: [],
+    showMenu: {showing: false, id: ''},
     loading: false,
     error: null,
     newTaskTitle: '',
-    limitError: {value: 0, error: false}
+    limitError: {value: 0, error: false},
+    idCurrentTask: '',
+    modifyingTitle: {editMode: false, id: ''},
 }
 
 export const todolistReducer = (state = initState, action: TodolistAction): TodolistState => {
@@ -27,8 +30,23 @@ export const todolistReducer = (state = initState, action: TodolistAction): Todo
             return {...state, loading: true, error: null}
         case TodolistActionTypes.POST_TODOLISTS_SUCCESS:
             return {
-                ...state, loading: false, error: null, todolists: [...state.todolists ,action.payload]
+                ...state, loading: false, error: null, todolists: [...state.todolists, action.payload]
             }
+
+        case TodolistActionTypes.SET_SHOW_MENU:
+            return {...state, showMenu: action.payload}
+        case TodolistActionTypes.SET_LOADING_TRUE:
+            return {...state, loading: true}
+
+        case TodolistActionTypes.CHANGE_STAR_TO_FALSE_SUCCESS:
+            return {...state, loading: false, todolists: [...action.payload]}
+
+        case TodolistActionTypes.SET_ID_CURRENT_TASK:
+            return {...state, idCurrentTask: action.payload}
+
+            case TodolistActionTypes.MODIFYING_TITLE:
+            return {...state, modifyingTitle: action.payload}
+
 
 
         default:

@@ -1,6 +1,8 @@
 
 body{
   box-sizing: border-box;
+  background-color: #63d471;
+  background-image: linear-gradient(315deg, #63d471 0%, #233329 74%);
 }
 .App {
   text-align: center;
