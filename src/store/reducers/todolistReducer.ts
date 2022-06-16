@@ -10,6 +10,8 @@ const initState: TodolistState = {
     limitError: {value: 0, error: false},
     idCurrentTask: '',
     modifyingTitle: {editMode: false, id: ''},
+    titleElement: '',
+    ConfirmModal: false // модалка вы уверены7
 }
 
 export const todolistReducer = (state = initState, action: TodolistAction): TodolistState => {
@@ -38,8 +40,8 @@ export const todolistReducer = (state = initState, action: TodolistAction): Todo
         case TodolistActionTypes.SET_LOADING_TRUE:
             return {...state, loading: true}
 
-        case TodolistActionTypes.CHANGE_STAR_TO_FALSE_SUCCESS:
-            return {...state, loading: false, todolists: [...action.payload]}
+        // case TodolistActionTypes.CHANGE_STAR_TO_FALSE_SUCCESS:
+        //     return {...state, loading: false, todolists: [...action.payload]}
 
         case TodolistActionTypes.SET_ID_CURRENT_TASK:
             return {...state, idCurrentTask: action.payload}
@@ -47,7 +49,13 @@ export const todolistReducer = (state = initState, action: TodolistAction): Todo
             case TodolistActionTypes.MODIFYING_TITLE:
             return {...state, modifyingTitle: action.payload}
 
+        case TodolistActionTypes.SET_TITLE_ELEMENT:
+            return {...state, titleElement: action.payload}
 
+
+
+        case TodolistActionTypes.PUT_TODOLISTS_SUCCESS:
+            return {...state, loading: false, todolists: [...action.payload]}
 
         default:
             return {...state}

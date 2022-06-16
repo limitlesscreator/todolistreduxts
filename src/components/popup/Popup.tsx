@@ -24,6 +24,7 @@ export const Popup = () => {
     const modifyTitleText = async () => {
         closeModal()
         dispatch({type: TodolistActionTypes.MODIFYING_TITLE, payload: {editMode: true, id: showMenu.id} })
+
     }
     return (
         <div className={s.modal}>

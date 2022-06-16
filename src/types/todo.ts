@@ -8,6 +8,8 @@ export interface TodolistState {
     idCurrentTask: string,
     modifyingTitle: ModifyingTitle,
     children?: any;
+    titleElement: string,
+    ConfirmModal: boolean
 }
 
 type ModifyingTitle = {
@@ -32,14 +34,17 @@ export enum TodolistActionTypes {
     POST_TODOLIST = "POST_TODOLIST",
     POST_TODOLISTS_SUCCESS = "POST_TODOLISTS_SUCCESS",
 
+    PUT_TODOLISTS_SUCCESS = "PUT_TODOLISTS_SUCCESS",
+
 
     NEW_TASK_TITLE = "NEW_TASK_TITLE",
     CHANGE_LIMIT_ERROR = "CHANGE_LIMIT_ERROR",
     SET_SHOW_MENU = "SET_SHOW_MENU",
     SET_LOADING_TRUE = "SET_LOADING_TRUE",
     SET_ID_CURRENT_TASK = "SET_ID_CURRENT_TASK",
+    SET_TITLE_ELEMENT = "SET_TITLE_ELEMENT",
 
-    CHANGE_STAR_TO_FALSE_SUCCESS = "CHANGE_STAR_TO_FALSE_SUCCESS",
+    // CHANGE_STAR_TO_FALSE_SUCCESS = "CHANGE_STAR_TO_FALSE_SUCCESS",
     MODIFYING_TITLE = "MODIFYING_TITLE",
 
 }
@@ -61,6 +66,11 @@ interface FetchTodolistsErrorAction {
 interface NewTaskTitleAction {
     type: TodolistActionTypes.NEW_TASK_TITLE
     payload: string // сообщение об ошибке
+}
+
+interface SetTitleElement {
+    type: TodolistActionTypes.SET_TITLE_ELEMENT
+    payload: string
 }
 
 interface ChangeLimitErrorAction {
@@ -86,15 +96,20 @@ interface PostTodolistSuccessAction {
     payload: any
 }
 
+interface PutTodolistSUccessAction{
+    type: TodolistActionTypes.PUT_TODOLISTS_SUCCESS,
+    payload: any
+}
+
 interface SetIdCurrentTask {
     type: TodolistActionTypes.SET_ID_CURRENT_TASK,
     payload: string
 }
 
-interface changeStarToFalse {
-    type: TodolistActionTypes.CHANGE_STAR_TO_FALSE_SUCCESS,
-    payload: any
-}
+// interface changeStarToFalse {
+//     type: TodolistActionTypes.CHANGE_STAR_TO_FALSE_SUCCESS,
+//     payload: any
+// }
 
 interface ModifyingTitleAction {
     type: TodolistActionTypes.MODIFYING_TITLE,
@@ -112,5 +127,7 @@ export type TodolistAction =
     | PostTodolistSuccessAction
     | SetShowMenu
     | SetLoadingTrue
-    | changeStarToFalse
+    // | changeStarToFalse
     | ModifyingTitleAction
+    | SetTitleElement
+    | PutTodolistSUccessAction

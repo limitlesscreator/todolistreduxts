@@ -78,4 +78,40 @@ export const changeTaskStarred = (todolists:any, id: string, value: boolean) :an
     }
 };
 
+export const PutTodolist = (title:string, todolists: any, id: string) :any => {
+
+    return async (dispatch: Dispatch<TodolistAction>) =>  {
+        try {
+            dispatch({type: TodolistActionTypes.SET_LOADING_TRUE})
+            const ourLocalObj = todolists.find((el:any) => el._id === id)
+
+            const obj = {
+                id: ourLocalObj._id,
+                title: title,
+                starred: ourLocalObj.starred,
+                done: ourLocalObj.done,
+                editMode: ourLocalObj.editMode,
+                date: ourLocalObj.date
+            }
+
+            const req = await fetch('https://servertodolistdb.herokuapp.com/API/updtodo',{
+                    method: 'PUT',
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(obj)
+                })
+            console.log(obj)
+            console.log(req)
+            // dispatch({type: TodolistActionTypes.FETCH_TODOLISTS})
+            const req2 = await fetch('https://servertodolistdb.herokuapp.com/API/GETtodos')
+            const response = await req2.json()
+            dispatch({type: TodolistActionTypes.FETCH_TODOLISTS_SUCCESS, payload: response}) // запрос на тудулисты
+
+        } catch (e) {
+            dispatch({type: TodolistActionTypes.FETCH_TODOLISTS_ERROR, payload: 'Произошла ошибка при смене статуса'})
+        }
+    }
+};
+
+
+
 
