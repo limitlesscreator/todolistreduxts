@@ -1,0 +1,61 @@
+.modal{
+    align-items: center;
+    background: rgba(0,0,0,.5);
+    bottom: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 101;
+    padding: 10px;
+    backdrop-filter: blur(10px)
+}
+
+.text{
+    height: 150px;
+    background: rgb(248, 248, 255);
+    border-radius: 25px;
+    width: 500px;
+    padding: 10px;
+}
+.positionBlock{
+    width: 100%;
+    position: relative;
+}
+
+.title{
+    color: black;
+    text-align: center;
+}
+
+.blockButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blockButtons button{
+    width: 100px;
+    margin: 10px 50px;
+}
+
+.closeIcon{
+    position: absolute;
+    right: -3px;
+    top: -40px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.title{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.cancelButton{
+
+}

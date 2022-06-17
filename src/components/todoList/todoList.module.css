@@ -2,34 +2,139 @@
     box-sizing: border-box;
 }
 .todoList{
-    width: 400px;
-    min-height: 600px;
-    background: #628ff8;
+    width: 470px;
+    padding: 25px 20px;
+    min-height: 300px;
+    background: rgba(255, 255, 255, 0.28);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     margin: 50px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 25px;
-    padding-bottom: 25px;
     box-sizing: border-box;
 }
 
-.task{
+.mainBlock{
+    position: relative;
+}
+
+.mainInput{
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 40px;
+    background: rgba(255, 255, 255, 0.28);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blockButtons{
     margin-top: 20px;
-    padding: 10px;
-    color: white;
-    width: 350px;
-    min-height: 80px;
-    background: #00caca;
-    border: 1px solid purple;
     display: flex;
+    width: 100%;
+    justify-content: space-between;
     align-items: center;
 }
 
-.inputButton{
-    display: flex;
+.limit{
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: darkred;
+    margin-top: 10px;
 }
 
+
+.task{
+    background: rgba(255, 255, 255, 0.28);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    color: white;
+    min-height: 80px;
+    background: rgba(0, 202, 202, 0.73);
+    display: flex;
+    align-items: center;
+    word-break: break-all;
+}
+
+.notActionStyleButton {
+    cursor: pointer;
+    color: rgba(41, 113, 134, 0.64);
+    height: 30px;
+    background: rgba(255, 255, 255, 0.28);
+    border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.downloading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    color: white;
+    height: 80vh;
+    font-size: 100px;
+}
+
+.activeStyleButton {
+    cursor: pointer;
+    color:  white;
+    height: 30px;
+    background: rgba(41, 113, 134, 0.64);
+    border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.secretInput{
+    width: 90%;
+    border-radius: 5px;
+    color: black;
+    height: 30px;
+    padding-left: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: none;
+}
+
+.inputButton{
+    position: relative;
+    width: 100%;
+    display: flex;
+    height: 35px;
+}
+.iconMenu{
+    cursor: pointer;
+    width: 35px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: rgba(85, 230, 255, 0.59);
+}
+
+.menuButton{
+    cursor: pointer;
+    width: 35px;
+    margin-left: auto;
+    opacity: 0.6;
+}
 .title{
     width: 330px;
 }
@@ -42,11 +147,10 @@
 .taskDoneMain{
     background: rgba(103, 114, 114, 0.7);
 }
-.iconMenu{
-    cursor: pointer;
-    width: 35px;
-}
+
 .starIcon{
+    margin-top: -2px;
     cursor: pointer;
-    width: 35px;
+    width: 40px;
+    opacity: 0.8;
 }

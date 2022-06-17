@@ -6,6 +6,9 @@ import s from './todoList.module.css'
 import {TodolistActionTypes} from "../../types/todo";
 import {ReactComponent as MenuIcon} from "../../icon/icon.svg";
 import {ReactComponent as StarIcon} from "../../icon/star.svg";
+import {ReactComponent as PlusIcon} from "../../icon/plus.svg";
+import {ImageComponent} from "../imageComponent/ImageComponent";
+
 
 export const TodoList: React.FC = () => {
     const inputField = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -28,7 +31,7 @@ export const TodoList: React.FC = () => {
     })
 
     if (loading) {
-        return <h1>Загрузка...</h1>
+        return <h1 className={s.downloading}>Загрузка...</h1>
     }
     if (error) {
         return <h1>{error}</h1>
@@ -59,7 +62,9 @@ export const TodoList: React.FC = () => {
             editMode: "false",
             date: new Date()
         }
-        dispatch(postTodolist(obj))
+        if (limitError?.value === 0){
+            dispatch(postTodolist(obj))
+        }
     }
 
 
@@ -73,107 +78,126 @@ export const TodoList: React.FC = () => {
     }
     const onKeyPressHandler = (event: any) => {
         if (event.code === 'Enter') {
-            console.log('boom put request')
             // titleElement текст на который заменяем в нашей тудушке
             dispatch({type: TodolistActionTypes.MODIFYING_TITLE, payload: {editMode: false, id: showMenu.id}})
             dispatch(PutTodolist(titleElement, todolists, modifyingTitle.id))
         }
-
+    }
+    const secondOnKeyPressHandler = (event: any) => {
+        if (event.code === 'Enter') {
+            addTask(newTaskTitle)
+        }
     }
 
     return (
-        <div className={s.todoList}>
-            <div className={s.inputButton}>
-                <input type="text" value={newTaskTitle} onChange={(e) => onChangeHandler(e)}/>
-                <button onClick={() => {
-                    addTask(newTaskTitle)
-                }}>add task
-                </button>
+       <div className={s.mainBlock}>
+           <ImageComponent/>
+           <div className={s.todoList}>
+               <div className={s.inputButton}>
+                   <input className={s.mainInput} type="text" value={newTaskTitle} onChange={(e) => onChangeHandler(e)} onKeyPress={(e) => secondOnKeyPressHandler(e)}/>
+                   {/*<button onClick={() => {addTask(newTaskTitle)}}>add task</button>*/}
+                   <PlusIcon onClick={() => addTask(newTaskTitle)}  className={s.iconMenu}/>
 
-            </div>
-            <div>
-                <button onClick={() => {
-                    setIsAnyFilter(true);
-                    setFilterTask('done')
-                }}>Выполненные задачи</button>
-                <button onClick={() => {
-                    setIsAnyFilter(true);
-                    setFilterTask('notDone')
-                }}>Задачи в работе</button>
-                <button onClick={() => {
-                    setIsAnyFilter(true);
-                    setFilterTask('starred')
-                }}>Избранные задачи</button>
-            </div>
-            {limitError?.error ? <div>Лимит привышен!! на {limitError.value} символа</div> : ''}
+               </div>
+               <div className={s.blockButtons}>
+                   <button className={filterTask === 'done' ? s.activeStyleButton : s.notActionStyleButton} onClick={() => {
+                       if(isAnyFilter && filterTask === 'done'){
+                           setIsAnyFilter(false);
+                           setFilterTask('all')
+                       }
+                       else {
+                           setIsAnyFilter(true);
+                           setFilterTask('done')
+                       }
+                   }}>Выполненные задачи</button>
+                   <button className={filterTask === 'notDone' ? s.activeStyleButton : s.notActionStyleButton} onClick={() => {
+                       if(isAnyFilter && filterTask === 'notDone'){
+                           setIsAnyFilter(false);
+                           setFilterTask('all')
+                       }
+                       else {
+                           setIsAnyFilter(true);
+                           setFilterTask('notDone')
+                       }
+                   }}>Задачи в работе</button>
+                   <button className={filterTask === 'starred' ? s.activeStyleButton : s.notActionStyleButton} onClick={() => {
+                       if(isAnyFilter && filterTask === 'starred'){
+                           setIsAnyFilter(false);
+                           setFilterTask('all')
+                       }
+                       else {
+                           setIsAnyFilter(true);
+                           setFilterTask('starred')
+                       }
+                   }}>Избранные задачи</button>
+               </div>
+               {limitError?.error ? <div className={s.limit}>Лимит привышен!! на {limitError.value} символа</div> : ''}
 
 
-            {todolists?.map(el => {
-                if(filterTask === 'all'){
-                    return (
-                        <div key={el._id} className={el.done ? tempStyleDone : s.task}>
+               {/*/ Обязательно сделал бы рефакторинг!! К срезу пытаюсь максимально хорошо успеть подготовиться)/*/}
+               {todolists?.map(el => {
+                   if(filterTask === 'all'){
+                       return (
+                           <div key={el._id} className={el.done ? tempStyleDone : s.task}>
 
-                            {modifyingTitle.editMode && modifyingTitle.id === el._id ?
-                                <input ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
-                                       onKeyPress={e => onKeyPressHandler(e)}/> :
-                                <div className={el.done ? tempStyle : s.title}>{el.title}</div>
-                            }
+                               {modifyingTitle.editMode && modifyingTitle.id === el._id ?
+                                   <input className={s.secretInput} ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
+                                          onKeyPress={e => onKeyPressHandler(e)}/> :
+                                   <div className={el.done ? tempStyle : s.title}>{el.title}</div>
+                               }
 
-                            {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
-                            <MenuIcon onClick={() => openMenu(el._id)} className={s.iconMenu}/>
-                            {/*<div>{`${el.starred}`}</div>*/}
-                        </div>
-                    )
-                }
-                else if(filterTask === 'done' && el.done === true){
-                    return (
-                        <div key={el._id} className={el.done ? tempStyleDone : s.task}>
+                               {el.starred ? <StarIcon color={'red'} onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
+                               <MenuIcon color={'red'} onClick={() => openMenu(el._id)} className={s.menuButton}/>
+                           </div>
+                       )
+                   }
+                   else if(filterTask === 'done' && el.done === true){
+                       return (
+                           <div key={el._id} className={el.done ? tempStyleDone : s.task}>
 
-                            {modifyingTitle.editMode && modifyingTitle.id === el._id ?
-                                <input ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
-                                       onKeyPress={e => onKeyPressHandler(e)}/> :
-                                <div className={el.done ? tempStyle : s.title}>{el.title}</div>
-                            }
+                               {modifyingTitle.editMode && modifyingTitle.id === el._id ?
+                                   <input ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
+                                          onKeyPress={e => onKeyPressHandler(e)}/> :
+                                   <div className={el.done ? tempStyle : s.title}>{el.title}</div>
+                               }
 
-                            {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
-                            <MenuIcon onClick={() => openMenu(el._id)} className={s.iconMenu}/>
-                            {/*<div>{`${el.starred}`}</div>*/}
-                        </div>
-                    )
-                }
-                else if(filterTask === 'notDone' && el.done === false){
-                    return (
-                        <div key={el._id} className={el.done ? tempStyleDone : s.task}>
+                               {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
+                               <MenuIcon  onClick={() => openMenu(el._id)} className={s.menuButton}/>
+                           </div>
+                       )
+                   }
+                   else if(filterTask === 'notDone' && el.done === false){
+                       return (
+                           <div key={el._id} className={el.done ? tempStyleDone : s.task}>
 
-                            {modifyingTitle.editMode && modifyingTitle.id === el._id ?
-                                <input ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
-                                       onKeyPress={e => onKeyPressHandler(e)}/> :
-                                <div className={el.done ? tempStyle : s.title}>{el.title}</div>
-                            }
+                               {modifyingTitle.editMode && modifyingTitle.id === el._id ?
+                                   <input ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
+                                          onKeyPress={e => onKeyPressHandler(e)}/> :
+                                   <div className={el.done ? tempStyle : s.title}>{el.title}</div>
+                               }
 
-                            {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
-                            <MenuIcon onClick={() => openMenu(el._id)} className={s.iconMenu}/>
-                            {/*<div>{`${el.starred}`}</div>*/}
-                        </div>
-                    )
-                }
-                else if(filterTask === 'starred' && el.starred === true && el.done === false){
-                    return (
-                        <div key={el._id} className={el.done ? tempStyleDone : s.task}>
+                               {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
+                               <MenuIcon onClick={() => openMenu(el._id)} className={s.menuButton}/>
+                           </div>
+                       )
+                   }
+                   else if(filterTask === 'starred' && el.starred === true && el.done === false){
+                       return (
+                           <div key={el._id} className={el.done ? tempStyleDone : s.task}>
 
-                            {modifyingTitle.editMode && modifyingTitle.id === el._id ?
-                                <input ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
-                                       onKeyPress={e => onKeyPressHandler(e)}/> :
-                                <div className={el.done ? tempStyle : s.title}>{el.title}</div>
-                            }
+                               {modifyingTitle.editMode && modifyingTitle.id === el._id ?
+                                   <input ref={inputField} type="" value={titleElement} onChange={e => inputChangeHandler(e)}
+                                          onKeyPress={e => onKeyPressHandler(e)}/> :
+                                   <div className={el.done ? tempStyle : s.title}>{el.title}</div>
+                               }
 
-                            {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
-                            <MenuIcon onClick={() => openMenu(el._id)} className={s.iconMenu}/>
-                            {/*<div>{`${el.starred}`}</div>*/}
-                        </div>
-                    )
-                }
-            })}
-        </div>
+                               {el.starred ? <StarIcon onClick={() => changeStarredToFalse(el._id)} className={s.starIcon}/> : ''}
+                               <MenuIcon onClick={() => openMenu(el._id)} className={s.menuButton}/>
+                           </div>
+                       )
+                   }
+               })}
+           </div>
+       </div>
     );
 };

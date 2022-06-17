@@ -9,7 +9,7 @@ export interface TodolistState {
     modifyingTitle: ModifyingTitle,
     children?: any;
     titleElement: string,
-    ConfirmModal: boolean
+    confirmModal: boolean
 }
 
 type ModifyingTitle = {
@@ -43,6 +43,11 @@ export enum TodolistActionTypes {
     SET_LOADING_TRUE = "SET_LOADING_TRUE",
     SET_ID_CURRENT_TASK = "SET_ID_CURRENT_TASK",
     SET_TITLE_ELEMENT = "SET_TITLE_ELEMENT",
+    SET_CONFIRM_MODAL = "SET_CONFIRM_MODAL",
+
+    DELETE_TASK_SUCCESS = "DELETE_TASK_SUCCESS",
+
+    SET_DONE_TASK_OR_NOT = "SET_DONE_TASK_OR_NOT",
 
     // CHANGE_STAR_TO_FALSE_SUCCESS = "CHANGE_STAR_TO_FALSE_SUCCESS",
     MODIFYING_TITLE = "MODIFYING_TITLE",
@@ -96,7 +101,7 @@ interface PostTodolistSuccessAction {
     payload: any
 }
 
-interface PutTodolistSUccessAction{
+interface PutTodolistSUccessAction {
     type: TodolistActionTypes.PUT_TODOLISTS_SUCCESS,
     payload: any
 }
@@ -106,10 +111,15 @@ interface SetIdCurrentTask {
     payload: string
 }
 
-// interface changeStarToFalse {
-//     type: TodolistActionTypes.CHANGE_STAR_TO_FALSE_SUCCESS,
-//     payload: any
-// }
+interface SetConfirmModal {
+    type: TodolistActionTypes.SET_CONFIRM_MODAL,
+    payload: boolean
+}
+
+interface DeleteTask {
+    type: TodolistActionTypes.DELETE_TASK_SUCCESS,
+}
+
 
 interface ModifyingTitleAction {
     type: TodolistActionTypes.MODIFYING_TITLE,
@@ -127,7 +137,8 @@ export type TodolistAction =
     | PostTodolistSuccessAction
     | SetShowMenu
     | SetLoadingTrue
-    // | changeStarToFalse
+    | SetConfirmModal
+    | DeleteTask
     | ModifyingTitleAction
     | SetTitleElement
     | PutTodolistSUccessAction
