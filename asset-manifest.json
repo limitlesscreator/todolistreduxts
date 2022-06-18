@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/todolistreduxts/static/css/main.c0d49624.css",
-    "main.js": "/todolistreduxts/static/js/main.2a0b918a.js",
+    "main.css": "/todolistreduxts/static/css/main.b22b6626.css",
+    "main.js": "/todolistreduxts/static/js/main.df9b80da.js",
     "static/js/787.b61b7a61.chunk.js": "/todolistreduxts/static/js/787.b61b7a61.chunk.js",
     "static/media/stechBook.png": "/todolistreduxts/static/media/stechBook.f0875919c008282362a4.png",
     "static/media/paper.png": "/todolistreduxts/static/media/paper.96dafadf5b30db3e009c.png",
@@ -14,12 +14,12 @@
     "index.html": "/todolistreduxts/index.html",
     "static/media/icon.svg": "/todolistreduxts/static/media/icon.25160ef88a1e603d6e1fb26bcc294dc7.svg",
     "static/media/plus.svg": "/todolistreduxts/static/media/plus.1177e6ac987d0ad856284c68f4484240.svg",
-    "main.c0d49624.css.map": "/todolistreduxts/static/css/main.c0d49624.css.map",
-    "main.2a0b918a.js.map": "/todolistreduxts/static/js/main.2a0b918a.js.map",
+    "main.b22b6626.css.map": "/todolistreduxts/static/css/main.b22b6626.css.map",
+    "main.df9b80da.js.map": "/todolistreduxts/static/js/main.df9b80da.js.map",
     "787.b61b7a61.chunk.js.map": "/todolistreduxts/static/js/787.b61b7a61.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c0d49624.css",
-    "static/js/main.2a0b918a.js"
+    "static/css/main.b22b6626.css",
+    "static/js/main.df9b80da.js"
   ]
 }
