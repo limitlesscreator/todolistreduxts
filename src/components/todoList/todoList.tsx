@@ -62,7 +62,7 @@ export const TodoList: React.FC = () => {
             editMode: "false",
             date: new Date()
         }
-        if (limitError?.value === 0){
+        if (limitError?.value < 1){
             dispatch(postTodolist(obj))
         }
     }

@@ -3,7 +3,7 @@ export interface TodolistState {
     loading?: boolean,
     error?: string | null,
     newTaskTitle: string,
-    limitError?: LimitError
+    limitError: LimitError
     showMenu: ShowMenu,
     idCurrentTask: string,
     modifyingTitle: ModifyingTitle,

@@ -3,6 +3,7 @@
     top: 0;
     right: 0;
     width: 300px;
+    z-index: -1;
 }
 .pencils{
     position: absolute;
@@ -10,6 +11,7 @@
     left: 200px;
     width: 500px;
     transform: rotate(70deg);
+    z-index: -1;
 }
 
 .mug{
@@ -17,6 +19,7 @@
     top: 157px;
     right: 250px;
     width: 500px;
+    z-index: -1;
 }
 
 .stechBook{
@@ -25,6 +28,7 @@
     left: -19px;
     width: 570px;
     transform: rotate(-39deg);
+    z-index: -1;
 }
 
 .scissors{
@@ -33,6 +37,7 @@
     left: 537px;
     width: 500px;
     transform: rotate(22deg);
+    z-index: -1;
 }
 
 .orange{
@@ -41,4 +46,5 @@
     right: -150px;
     width: 350px;
     transform: rotate(22deg);
+    z-index: -1;
 }

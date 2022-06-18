@@ -23,7 +23,7 @@ export const postTodolist = ({title, starred, done, editMode, date}:any) :any =>
             const obj = {
                 title: title,
                 starred: starred,
-                done: done,
+                done: false,
                 editMode: editMode,
                 date: date
             }
